@@ -1,10 +1,12 @@
-import AuthLayout from "@/component/master/AuthLayout";
-import LoginForm from "@/component/user/LoginForm";
+import HeroSection from "../components/HeroSection";
+import PlainLayout from "../components/master/PlainLayout";
 
-export default function Home() {
+export default function page() {
   return (
-    <AuthLayout>
-      <LoginForm />
-    </AuthLayout>
+    <>
+      <PlainLayout>
+        <HeroSection />
+      </PlainLayout>
+    </>
   );
 }

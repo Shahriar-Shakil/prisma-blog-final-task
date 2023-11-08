@@ -1,5 +1,5 @@
-import AuthLayout from "@/component/master/AuthLayout";
-import PasswordResetForm from "@/component/user/PasswordResetForm";
+import AuthLayout from "@/components/master/AuthLayout";
+import PasswordResetForm from "@/components/user/PasswordResetForm";
 
 export default function Page() {
   return (

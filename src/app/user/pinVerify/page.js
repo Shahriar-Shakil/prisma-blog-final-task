@@ -1,5 +1,5 @@
-import AuthLayout from "@/component/master/AuthLayout";
-import PinVerifyForm from "@/component/user/PinVerifyForm";
+import AuthLayout from "@/components/master/AuthLayout";
+import PinVerifyForm from "@/components/user/PinVerifyForm";
 
 export default function Page() {
   return (

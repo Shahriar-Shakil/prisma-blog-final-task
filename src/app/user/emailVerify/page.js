@@ -1,10 +1,10 @@
 import AuthLayout from "@/components/master/AuthLayout";
-import RegistrationForm from "@/components/user/RegistrationForm";
+import EmailVerificationForm from "@/components/user/EmailVerificationForm";
 
 export default function Page() {
   return (
     <AuthLayout>
-      <RegistrationForm />
+      <EmailVerificationForm />
     </AuthLayout>
   );
 }
