@@ -1,12 +1,10 @@
-import FAQ from "@/components/FAQ";
-import Stats from "@/components/Stats";
+import ServiceList from "@/components/ServiceList";
 import PlainLayout from "@/components/master/PlainLayout";
 
 export default function page() {
   return (
     <PlainLayout>
-      <Stats />
-      <FAQ />
+      <ServiceList />
     </PlainLayout>
   );
 }
