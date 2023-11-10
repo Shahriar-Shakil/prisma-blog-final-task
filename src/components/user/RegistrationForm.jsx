@@ -1,7 +1,34 @@
+"use client";
+import axios from "axios";
 import Link from "next/link";
-import React from "react";
-
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 export default function RegistrationForm() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    delete data.confirm_password;
+    try {
+      let res = await axios.post("/api/user/registration", { ...data });
+      console.log(res);
+
+      if (res.data.status === "success") {
+        toast.success("Registration Success");
+        router.replace("/user/login");
+      } else {
+        toast.error(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
   return (
     <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -18,7 +45,7 @@ export default function RegistrationForm() {
 
         <div className="mt-10">
           <div>
-            <form action="#" method="POST" className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
                   htmlFor="firstName"
@@ -28,13 +55,12 @@ export default function RegistrationForm() {
                 </label>
                 <div className="mt-2">
                   <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    autoComplete="firstName"
-                    required
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("firstName", {
+                      required: "First Name is required",
+                    })}
                   />
+                  <p className="text-red-300">{errors.firstName?.message}</p>
                 </div>
               </div>
               <div>
@@ -46,13 +72,12 @@ export default function RegistrationForm() {
                 </label>
                 <div className="mt-2">
                   <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    autoComplete="lastName"
-                    required
+                    {...register("lastName", {
+                      required: "Last Name is required",
+                    })}
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">{errors.lastName?.message}</p>
                 </div>
               </div>
               <div>
@@ -65,12 +90,13 @@ export default function RegistrationForm() {
                 <div className="mt-2">
                   <input
                     id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
+                    autoComplete="username"
+                    {...register("email", {
+                      required: "Email is required",
+                    })}
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">{errors.email?.message}</p>
                 </div>
               </div>
 
@@ -84,10 +110,7 @@ export default function RegistrationForm() {
                 <div className="mt-2">
                   <input
                     id="phone"
-                    name="phone"
-                    type="phone"
-                    autoComplete="phone"
-                    required
+                    {...register("mobile", { required: false })}
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -102,30 +125,41 @@ export default function RegistrationForm() {
                 <div className="mt-2">
                   <input
                     id="password"
-                    name="password"
                     type="password"
                     autoComplete="current-password"
-                    required
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">{errors.email?.message}</p>
                 </div>
               </div>
               <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="confirm_password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Confirm Password
                 </label>
                 <div className="mt-2">
                   <input
-                    id="password"
-                    name="password"
+                    id="confirm_password"
                     type="password"
-                    autoComplete="current-password"
-                    required
+                    autoComplete="new-password"
+                    {...register("confirm_password", {
+                      required: true,
+                      validate: (val) => {
+                        if (watch("password") != val) {
+                          return "Your Password do no match";
+                        }
+                      },
+                    })}
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">
+                    {errors.confirm_password?.message}
+                  </p>
                 </div>
               </div>
 

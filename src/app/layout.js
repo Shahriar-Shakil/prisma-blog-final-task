@@ -1,4 +1,5 @@
 import NextTopLoaderComponent from "@/components/NextTopLoader";
+import { Toaster } from "react-hot-toast";
 
 import { Inter } from "next/font/google";
 import "./global.css";
@@ -13,9 +14,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full bg-white">
-      <body>
+      <body className="h-full">
         <NextTopLoaderComponent />
         {children}
+        <Toaster />
       </body>
     </html>
   );
