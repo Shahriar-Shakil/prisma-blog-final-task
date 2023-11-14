@@ -17,7 +17,6 @@ export default function RegistrationForm() {
     delete data.confirm_password;
     try {
       let res = await axios.post("/api/user/registration", { ...data });
-      console.log(res);
 
       if (res.data.status === "success") {
         toast.success("Registration Success");

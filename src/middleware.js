@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 import { VerifyToken } from "./utils/JWTTokenHelper";
 
 export async function middleware(req, res) {
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
+  if (
+    req.nextUrl.pathname.startsWith("/dashboard") ||
+    req.nextUrl.pathname === "/api/user"
+  ) {
+    const { pathname } = req.nextUrl;
     try {
       let token = req.cookies.get("token");
       let payload = await VerifyToken(token["value"]);
-
       const requestHeader = new Headers(req.headers);
       requestHeader.set("email", payload["email"]);
       requestHeader.set("id", payload["id"]);
@@ -15,7 +18,9 @@ export async function middleware(req, res) {
         request: { headers: requestHeader },
       });
     } catch (e) {
-      return NextResponse.redirect(new URL("/user/login", req.url));
+      return NextResponse.redirect(
+        new URL(`/user/login?callbackUrl=${pathname}`, req.url)
+      );
     }
   }
 }

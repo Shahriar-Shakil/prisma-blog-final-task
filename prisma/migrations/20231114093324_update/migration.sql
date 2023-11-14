@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `users` ADD COLUMN `otp` VARCHAR(10) NOT NULL DEFAULT '0';

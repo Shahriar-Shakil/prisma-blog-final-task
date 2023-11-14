@@ -1,7 +1,5 @@
-import ContactPage from "@/components/ContactPage";
-import RecentBlogs from "@/components/RecentBlogs";
-import PlainLayout from "@/components/master/PlainLayout";
+import SideLayout from "@/components/master/SideLayout";
 
 export default function page() {
-  return <></>;
+  return <SideLayout>Hello</SideLayout>;
 }

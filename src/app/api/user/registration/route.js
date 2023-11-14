@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
   try {
-    console.log("working");
     let reqBody = await req.json();
     let prisma = new PrismaClient({ log: ["error"] });
 

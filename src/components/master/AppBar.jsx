@@ -10,6 +10,7 @@ const navigation = [
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
+
 export default function AppBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

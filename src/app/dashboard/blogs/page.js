@@ -1,7 +1,14 @@
-import ContactPage from "@/components/ContactPage";
-import RecentBlogs from "@/components/RecentBlogs";
-import PlainLayout from "@/components/master/PlainLayout";
+import PageHeading from "@/components/UI/PageHeading";
+import BlogList from "./components/BlogList";
 
 export default function page() {
-  return <></>;
+  return (
+    <div className="py-5">
+      <PageHeading
+        title="Create New Blog"
+        navigateTo={"/dashboard/blogs/create"}
+      />
+      <BlogList />
+    </div>
+  );
 }

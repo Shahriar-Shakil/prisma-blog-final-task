@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 
 import { Inter } from "next/font/google";
 import "./global.css";
+import StyledComponentsRegistry from "@/lib/AntdRegistry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full bg-white">
       <body className="h-full">
         <NextTopLoaderComponent />
-        {children}
+        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         <Toaster />
       </body>
     </html>

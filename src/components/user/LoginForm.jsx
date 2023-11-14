@@ -1,7 +1,32 @@
+"use client";
+import axios from "axios";
 import Link from "next/link";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("/api/user/login", { ...data });
+      if (res.data.status === "success") {
+        router.push(callbackUrl);
+      } else {
+        toast.error(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error.toString());
+    }
+  };
   return (
     <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -18,7 +43,7 @@ export default function LoginForm() {
 
         <div className="mt-10">
           <div>
-            <form action="#" method="POST" className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -32,9 +57,13 @@ export default function LoginForm() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    {...register("email", {
+                      required: "Email is required",
+                    })}
                     required
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">{errors.email?.message}</p>
                 </div>
               </div>
 
@@ -50,10 +79,14 @@ export default function LoginForm() {
                     id="password"
                     name="password"
                     type="password"
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <p className="text-red-300">{errors.password?.message}</p>
                 </div>
               </div>
 

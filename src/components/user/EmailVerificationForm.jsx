@@ -1,6 +1,31 @@
+"use client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function EmailVerificationForm() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.get(`/api/user/recover?email=${data?.email}`);
+      if (res.data.status === "success") {
+        // console.log(res.data);
+        router.push(`/user/pinVerify?email=${data?.email}`);
+        toast.success(res.data.data);
+      } else {
+        toast.error(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error.toString());
+    }
+  };
   return (
     <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -17,7 +42,7 @@ export default function EmailVerificationForm() {
 
         <div className="mt-10">
           <div>
-            <form action="#" method="POST" className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -33,6 +58,9 @@ export default function EmailVerificationForm() {
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("email", {
+                      required: "Email is required",
+                    })}
                   />
                 </div>
               </div>
