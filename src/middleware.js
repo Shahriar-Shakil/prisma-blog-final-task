@@ -4,7 +4,7 @@ import { VerifyToken } from "./utils/JWTTokenHelper";
 export async function middleware(req, res) {
   if (
     req.nextUrl.pathname.startsWith("/dashboard") ||
-    req.nextUrl.pathname === "/api/user"
+    req.nextUrl.pathname.startsWith("/api/dashboard")
   ) {
     const { pathname } = req.nextUrl;
     try {

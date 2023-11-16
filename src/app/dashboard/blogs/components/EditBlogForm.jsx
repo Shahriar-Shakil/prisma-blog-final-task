@@ -2,31 +2,37 @@
 import { Switch } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function CreateBlogForm() {
+export default function EditBlogForm({ blog }) {
   const router = useRouter();
-  const [published, setPublished] = useState(true);
+  const [published, setPublished] = useState();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    reset(blog);
+    if (blog) {
+      setPublished(blog.published);
+    }
+  }, [blog]);
   const handlePublished = (value) => {
     setPublished(value);
   };
   const onSubmit = async (data) => {
     try {
-      const result = await axios.post("/api/dashboard/blog", {
+      const result = await axios.put("/api/dashboard/blog", {
         ...data,
         published: published,
       });
       if (result.data.status === "success") {
         toast.success("Blog Create Successfully");
-        reset();
+        router.refresh();
       } else {
         toast.error(result.data.data);
       }
