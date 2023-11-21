@@ -1,13 +1,13 @@
 import PageHeading from "@/components/UI/PageHeading";
-import CreateTeamForm from "./components/CreateTeamForm";
+import CreateTeamForm from "../components/CreateTeamForm";
 
 export default function page() {
   return (
     <div className="py-5 space-y-5">
       <PageHeading
-        title="Create New Blog"
-        navigateTo={"/dashboard/team/create"}
-        actionTitle="Create Team"
+        title="Create New Team"
+        navigateTo={"/dashboard/team"}
+        actionTitle="Back"
       />
       <CreateTeamForm />
     </div>

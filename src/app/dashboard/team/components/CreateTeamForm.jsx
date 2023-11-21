@@ -2,37 +2,30 @@
 import { Switch } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function EditBlogForm({ blog }) {
+export default function CreateTeamForm() {
   const router = useRouter();
-  const [published, setPublished] = useState();
+  const [published, setPublished] = useState(true);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  useEffect(() => {
-    reset(blog);
-    if (blog) {
-      setPublished(blog.published);
-    }
-  }, [blog]);
   const handlePublished = (value) => {
     setPublished(value);
   };
   const onSubmit = async (data) => {
     try {
-      const result = await axios.put("/api/dashboard/blog", {
+      const result = await axios.post("/api/dashboard/team", {
         ...data,
-        published: published,
       });
       if (result.data.status === "success") {
         toast.success("Blog Create Successfully");
-        router.refresh();
+        reset();
       } else {
         toast.error(result.data.data);
       }
@@ -50,17 +43,17 @@ export default function EditBlogForm({ blog }) {
                 htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Title
+                Profile
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="title"
-                    id="title"
+                    name="name"
+                    id="name"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("title", {
-                      required: "title is required",
+                    {...register("name", {
+                      required: "name is required",
                     })}
                   />
                 </div>
@@ -68,20 +61,20 @@ export default function EditBlogForm({ blog }) {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="metaTitle"
+                htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Meta Title
+                Name
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="metaTitle"
-                    id="metaTitle"
+                    name="name"
+                    id="name"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("metaTitle", {
-                      required: "MetaTitle is required",
+                    {...register("name", {
+                      required: "name is required",
                     })}
                   />
                 </div>
@@ -89,20 +82,20 @@ export default function EditBlogForm({ blog }) {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="slug"
+                htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Slug
+                Role
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="slug"
-                    id="slug"
+                    name="role"
+                    id="role"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("slug", {
-                      required: "slug is required",
+                    {...register("role", {
+                      required: "role is required",
                     })}
                   />
                 </div>
@@ -110,18 +103,20 @@ export default function EditBlogForm({ blog }) {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="summary"
+                htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                summary
+                Twitter
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <textarea
+                  <input
                     type="text"
+                    name="twitter"
+                    id="twitter"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("summary", {
-                      required: "summary is required",
+                    {...register("twitter", {
+                      required: false,
                     })}
                   />
                 </div>
@@ -129,18 +124,41 @@ export default function EditBlogForm({ blog }) {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="content"
+                htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Content
+                Facebook
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <textarea
+                  <input
                     type="text"
+                    name="facebook"
+                    id="facebook"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("content", {
-                      required: "content is required",
+                    {...register("facebook", {
+                      required: false,
+                    })}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                LinkedIn
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="linkedin"
+                    id="linkedin"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    {...register("linkedin", {
+                      required: false,
                     })}
                   />
                 </div>
@@ -148,23 +166,13 @@ export default function EditBlogForm({ blog }) {
             </div>
 
             <div className="sm:col-span-4">
-              <div className="flex items-center gap-10">
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Published
-                  </label>
-                  <div className="mt-2">
-                    <Switch checked={published} onChange={handlePublished} />
-                  </div>
-                </div>
-                <div className="">
-                  <button
-                    type="submit"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Save
-                  </button>
-                </div>
+              <div className="">
+                <button
+                  type="submit"
+                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>
