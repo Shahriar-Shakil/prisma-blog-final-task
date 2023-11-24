@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prismaConfig";
 
 const getBlogBySlug = async (slug) => {
-  const prisma = new PrismaClient();
   const blog = await prisma.blog.findUnique({
     where: { slug },
   });

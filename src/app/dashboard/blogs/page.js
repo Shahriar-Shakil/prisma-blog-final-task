@@ -1,12 +1,11 @@
 import PageHeading from "@/components/UI/PageHeading";
 import BlogList from "./components/BlogList";
-import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
+import { prisma } from "@/lib/prismaConfig";
 
 const getBlogs = async () => {
   const headerList = headers();
   const user_id = parseInt(headerList.get("id"));
-  const prisma = new PrismaClient();
   const blogs = await prisma.blog.findMany({ where: { authorId: user_id } });
   return blogs;
 };

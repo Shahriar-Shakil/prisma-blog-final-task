@@ -1,5 +1,5 @@
+import { prisma } from "@/lib/prismaConfig";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 
 export async function GET(req, res) {
   try {
@@ -7,7 +7,6 @@ export async function GET(req, res) {
     let email = searchParams.get("email");
 
     // User Count
-    const prisma = new PrismaClient();
     const count = await prisma.users.count({ where: { email: email } });
     console.log("count", count);
     if (count === 1) {
@@ -37,7 +36,6 @@ export async function GET(req, res) {
 export async function POST(req, res) {
   try {
     const reqBody = await req.json();
-    const prisma = new PrismaClient();
     const count = await prisma.users.count({ where: reqBody });
 
     if (count === 1) {
@@ -52,7 +50,6 @@ export async function POST(req, res) {
 export async function PUT(req, res) {
   try {
     const reqBody = await req.json();
-    const prisma = new PrismaClient();
     const count = await prisma.users.count({
       where: { email: reqBody["email"], otp: reqBody["otp"] },
     });

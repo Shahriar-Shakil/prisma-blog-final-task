@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
 import SideNavHeader from "./SideNavHeader";
+import { prisma } from "@/lib/prismaConfig";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -8,7 +8,6 @@ function classNames(...classes) {
 const getData = async () => {
   const headerList = headers();
   let user_id = parseInt(headerList.get("id"));
-  const prisma = new PrismaClient();
   return await prisma.users.findUnique({ where: { id: user_id } });
 };
 export default async function SideLayout({ children }) {
