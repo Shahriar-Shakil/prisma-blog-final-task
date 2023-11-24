@@ -31,7 +31,7 @@ export default function EditBlogForm({ blog }) {
         published: published,
       });
       if (result.data.status === "success") {
-        toast.success("Blog Create Successfully");
+        toast.success("Blog Update Successfully");
         router.refresh();
       } else {
         toast.error(result.data.data);
