@@ -1,30 +1,23 @@
 "use client";
-import { Switch } from "antd";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function CreateTeamForm() {
-  const router = useRouter();
-  const [published, setPublished] = useState(true);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const handlePublished = (value) => {
-    setPublished(value);
-  };
+
   const onSubmit = async (data) => {
     try {
       const result = await axios.post("/api/dashboard/team", {
         ...data,
       });
       if (result.data.status === "success") {
-        toast.success("Blog Create Successfully");
+        toast.success("Team Create Successfully");
         reset();
       } else {
         toast.error(result.data.data);
@@ -43,7 +36,7 @@ export default function CreateTeamForm() {
                 htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Profile
+                Name
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -64,17 +57,15 @@ export default function CreateTeamForm() {
                 htmlFor="title"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Name
+                Profile Image
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("name", {
-                      required: "name is required",
+                    {...register("profile_image_url", {
+                      required: false,
                     })}
                   />
                 </div>
@@ -115,7 +106,7 @@ export default function CreateTeamForm() {
                     name="twitter"
                     id="twitter"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("twitter", {
+                    {...register("twitter_url", {
                       required: false,
                     })}
                   />
@@ -136,7 +127,7 @@ export default function CreateTeamForm() {
                     name="facebook"
                     id="facebook"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("facebook", {
+                    {...register("facebook_url", {
                       required: false,
                     })}
                   />
@@ -157,7 +148,7 @@ export default function CreateTeamForm() {
                     name="linkedin"
                     id="linkedin"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    {...register("linkedin", {
+                    {...register("linkedIn_url", {
                       required: false,
                     })}
                   />

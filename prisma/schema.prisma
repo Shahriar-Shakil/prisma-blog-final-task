@@ -35,3 +35,15 @@ model blog {
 
   @@index([authorId], map: "blog_authorId_fkey")
 }
+
+model team {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(50)
+  profile_image_url String   @db.VarChar(255)
+  role              String   @db.VarChar(50)
+  facebook_url      String   @db.VarChar(255)
+  twitter_url       String   @db.VarChar(255)
+  linkedIn_url      String   @db.VarChar(255)
+  createAt          DateTime @default(now()) @db.Timestamp(0)
+  updateAt          DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
