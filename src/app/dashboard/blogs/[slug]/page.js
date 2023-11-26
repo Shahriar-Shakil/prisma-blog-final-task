@@ -1,17 +1,17 @@
-import PageHeading from "@/components/UI/PageHeading";
-import EditBlogForm from "../components/EditBlogForm";
 import getBlogBySlug from "@/data/getBlogBySlug";
+import EditBlogForm from "../components/EditBlogForm";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default async function page({ params }) {
   const { slug } = params;
   const blog = await getBlogBySlug(slug);
+  const pages = [
+    { name: "home", href: "/dashboard/blogs/", current: false },
+    { name: `${blog.title}`, href: `/dashboard/blogs/${slug}`, current: true },
+  ];
   return (
     <div className="py-5">
-      <PageHeading
-        title="Edit Blog"
-        navigateTo={"/dashboard/blogs"}
-        actionTitle="Back"
-      />
+      <Breadcrumb pages={pages} />
       <EditBlogForm blog={blog} />{" "}
     </div>
   );

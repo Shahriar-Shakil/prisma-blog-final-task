@@ -26,7 +26,7 @@ export default function EditBlogForm({ blog }) {
   };
   const onSubmit = async (data) => {
     try {
-      const result = await axios.put("/api/dashboard/team", {
+      const result = await axios.put("/api/dashboard/blog", {
         ...data,
         published: published,
       });
