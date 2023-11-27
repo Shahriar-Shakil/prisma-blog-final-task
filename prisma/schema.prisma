@@ -8,16 +8,17 @@ datasource db {
 }
 
 model users {
-  id        Int      @id @default(autoincrement())
-  firstName String   @db.VarChar(50)
-  lastName  String   @db.VarChar(50)
-  email     String   @unique @db.VarChar(50)
-  password  String   @db.VarChar(50)
-  createAt  DateTime @default(now()) @db.Timestamp(0)
-  updateAt  DateTime @default(now()) @updatedAt @db.Timestamp(0)
-  mobile    String
-  otp       String   @default("0") @db.VarChar(10)
-  blogs     blog[]
+  id                Int      @id @default(autoincrement())
+  firstName         String   @db.VarChar(50)
+  lastName          String   @db.VarChar(50)
+  email             String   @unique @db.VarChar(50)
+  password          String   @db.VarChar(50)
+  createAt          DateTime @default(now()) @db.Timestamp(0)
+  updateAt          DateTime @default(now()) @updatedAt @db.Timestamp(0)
+  mobile            String
+  otp               String   @default("0") @db.VarChar(10)
+  profile_image_url String   @default("") @db.VarChar(255)
+  blogs             blog[]
 }
 
 model blog {
