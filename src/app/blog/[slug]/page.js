@@ -1,4 +1,3 @@
-import RecentBlogs from "@/components/RecentBlogs";
 import BlogCard from "@/components/UI/BlogCard";
 import PlainLayout from "@/components/master/PlainLayout";
 import { prisma } from "@/lib/prismaConfig";

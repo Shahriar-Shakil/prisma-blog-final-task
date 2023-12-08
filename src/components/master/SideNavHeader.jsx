@@ -1,25 +1,17 @@
 "use client";
-import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
-  Bars3Icon,
-  BellIcon,
   CalendarIcon,
-  ChartPieIcon,
-  Cog6ToothIcon,
   DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/20/solid";
 import Link from "next/link";
-import HeaderDashboard from "./HeaderDashboard";
 import { usePathname } from "next/navigation";
+import { Fragment, useState } from "react";
+import HeaderDashboard from "./HeaderDashboard";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },

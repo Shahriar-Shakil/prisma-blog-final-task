@@ -2,9 +2,6 @@ import { headers } from "next/headers";
 import SideNavHeader from "./SideNavHeader";
 import { prisma } from "@/lib/prismaConfig";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 const getData = async () => {
   const headerList = headers();
   let user_id = parseInt(headerList.get("id"));
