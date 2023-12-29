@@ -1,14 +1,16 @@
 "use client";
+import { UploadOutlined } from "@ant-design/icons";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { Button, message, Upload } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function ProfileForm({ user }) {
   const router = useRouter();
-
+  const [image, setImage] = useState();
   const {
     register,
     handleSubmit,
@@ -21,6 +23,23 @@ export default function ProfileForm({ user }) {
     //   setPublished(blog.published);
     // }
   }, [user]);
+  const props = {
+    beforeUpload(info) {
+      console.log(info, "before");
+    },
+    onChange(info) {
+      console.log(info);
+      // if (info.file.status !== "uploading") {
+      //   console.log(info.file, info.fileList);
+      // }
+      // if (info.file.status === "done") {
+      //   message.success(`${info.file.name} file uploaded successfully`);
+      // } else if (info.file.status === "error") {
+      //   message.error(`${info.file.name} file upload failed.`);
+      // }
+    },
+  };
+
   const onSubmit = async (data) => {
     try {
       const result = await axios.put("/api/dashboard/profile", {
@@ -67,12 +86,9 @@ export default function ProfileForm({ user }) {
                       className="h-12 w-12 text-gray-300"
                       aria-hidden="true"
                     />
-                    <button
-                      type="button"
-                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Change
-                    </button>
+                    <Upload {...props}>
+                      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                    </Upload>
                   </div>
                 </div>
                 <div className="sm:col-span-3">
