@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prismaConfig";
 import MomentComponent from "./UI/MomentComponent";
 import Link from "next/link";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
 
 async function getData() {
   const res = await prisma.blog.findMany({
@@ -45,12 +46,25 @@ export default async function RecentBlogs() {
                   {post.summary}
                 </p>
               </div>
-              <div className="relative mt-8 flex items-center gap-x-4">
-                <img
-                  src={post.author.profile_image_url}
-                  alt=""
-                  className="h-10 w-10 rounded-full bg-gray-50"
-                />
+              <div className="relative mt-8 flex items-center gap-x-2">
+                {post.author.profile_image_url ? (
+                  <>
+                    {" "}
+                    <img
+                      src={post.author.profile_image_url}
+                      alt=""
+                      className="h-10 w-10 rounded-full bg-gray-50"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <UserCircleIcon
+                      className="h-10 w-10 text-gray-300"
+                      aria-hidden="true"
+                    />
+                  </>
+                )}
+
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900">
                     <span className="absolute inset-0" />
