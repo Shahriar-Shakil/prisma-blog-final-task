@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MomentComponent from "./MomentComponent";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
 
 export default function BlogCard({ post }) {
   return (
